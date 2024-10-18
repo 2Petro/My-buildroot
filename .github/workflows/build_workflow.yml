@@ -27,7 +27,6 @@ jobs:
       run: |
         CONFIG_FILE=$(cat build_workflow)
         echo "Using config: $CONFIG_FILE"
-        cd buildroot
         make -j$(nproc) CROSS_COMPILE=arm-linux-gnueabi-
 
     - name: Build Buildroot
