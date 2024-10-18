@@ -39,5 +39,5 @@ jobs:
       with:
         name: buildroot-output
         path: |
-          buildroot/output/images/rootfs.tar
+          buildroot/output/images/rootfs.ext2
           buildroot/output/images/initramfs.cpio
