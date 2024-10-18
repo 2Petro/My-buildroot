@@ -1,0 +1,45 @@
+name: Build Buildroot
+
+on:
+  push:
+    branches:
+      - main  # Trigger on commits to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Checkout the repository code
+
+    - name: Install Buildroot dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential bison flex libncurses5-dev \
+        libncursesw5-dev gawk git wget bc python3 python3-pip \
+        gcc-arm-linux-gnueabi # ARM cross-compilation toolchain
+
+    - name: Load defconfig from build_workflow
+      run: |
+        CONFIG_FILE=$(cat build_workflow)
+        echo "Using config: $CONFIG_FILE"
+        cd buildroot
+        make $CONFIG_FILE
+
+    - name: Build Buildroot
+      run: |
+        cd buildroot
+        make
+
+    - name: Upload artifacts
+      if: success()
+      uses: actions/upload-artifact@v2
+      with:
+        name: buildroot-output
+        path: |
+          buildroot/output/images/rootfs.tar
+          buildroot/output/images/initramfs.cpio
