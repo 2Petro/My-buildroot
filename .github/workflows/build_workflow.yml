@@ -28,7 +28,7 @@ jobs:
         CONFIG_FILE=$(cat build_workflow)
         echo "Using config: $CONFIG_FILE"
         cd buildroot
-        make $CONFIG_FILE
+        make -j$(nproc) CROSS_COMPILE=arm-linux-gnueabi-
 
     - name: Build Buildroot
       run: |
@@ -37,7 +37,7 @@ jobs:
 
     - name: Upload artifacts
       if: success()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3  # Updated to v3
       with:
         name: buildroot-output
         path: |
