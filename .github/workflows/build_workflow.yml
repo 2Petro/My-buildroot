@@ -39,5 +39,5 @@ jobs:
       with:
         name: buildroot-output
         path: |
-          /home/runner/work/My-buildroot/My-buildroot/buildroot/output/images/rootfs.ext2
-          /home/runner/work/My-buildroot/My-buildroot/buildroot/output/images/initramfs.cpio
+          output/images/rootfs.ext2
+          output/images/initramfs.cpio
