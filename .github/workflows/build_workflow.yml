@@ -32,7 +32,6 @@ jobs:
 
     - name: Build Buildroot
       run: |
-        cd buildroot
         make
 
     - name: Upload artifacts
